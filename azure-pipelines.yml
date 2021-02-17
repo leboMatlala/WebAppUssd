@@ -17,6 +17,10 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
+  - task: CopyFiles@2
+  inputs:
+    targetFolder: '$(Build.ArtifactStagingDirectory)' 
+    
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
@@ -31,11 +35,7 @@ steps:
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-  
-  - task: CopyFiles@2
-  inputs:
-    targetFolder: '$(Build.ArtifactStagingDirectory)'    
+    configuration: '$(buildConfiguration)'   
 
 - task: PublishBuildArtifacts@1    
   displayName: 'Publish Artifact: drop'
